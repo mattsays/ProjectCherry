@@ -2,6 +2,7 @@ package it.mattsay.cherry;
 
 
 import it.mattsay.cherry.utils.Commands;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -27,6 +28,16 @@ public class LagSwitch implements NativeKeyListener, NativeMouseListener {
     private boolean state, pressed, binding;
     private String c;
     private TextField field;
+    private Label stateLabel;
+    private float volume = 100f;
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
+    }
 
     public void setKey(String c) {
         this.c = c;
@@ -36,9 +47,14 @@ public class LagSwitch implements NativeKeyListener, NativeMouseListener {
         return c;
     }
 
+    public void setStateLabel(Label stateLabel) {
+        this.stateLabel = stateLabel;
+    }
+
     public void setField(TextField field) {
         this.field = field;
     }
+
 
     public void setBinding(boolean binding) {
         this.binding = binding;
@@ -50,9 +66,11 @@ public class LagSwitch implements NativeKeyListener, NativeMouseListener {
         }
     }
 
-    public void setState(boolean state){
+    public void setSwitch(boolean value) {
+        Commands.playSound("state_change.wav", this.volume);
         Commands.execute("netsh advfirewall set allprofiles firewallpolicy blockinbound," + (state ? "blockoutbound" : "allowoutbound"));
         Main.LOGGER.info("You have " + (state ? "enabled" : "disabled") + " the lag switch!");
+        CherryScene.setStateText(value);
     }
 
     @Override
@@ -66,7 +84,7 @@ public class LagSwitch implements NativeKeyListener, NativeMouseListener {
             pressed = true;
             if(Main.ENABLED) {
                 state = !state;
-                this.setState(state);
+                this.setSwitch(state);
             }
         }
         if(this.binding){
@@ -94,7 +112,7 @@ public class LagSwitch implements NativeKeyListener, NativeMouseListener {
                 pressed = true;
                 if (Main.ENABLED) {
                     state = !state;
-                    this.setState(state);
+                    this.setSwitch(state);
                 }
             }
         }

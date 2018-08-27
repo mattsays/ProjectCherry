@@ -1,6 +1,11 @@
 package it.mattsay.cherry.utils;
 
 import it.mattsay.cherry.Main;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.IOException;
 
 public class Commands {
@@ -18,5 +23,25 @@ public class Commands {
         }
     }
 
+    public static synchronized void playSound(final String url, float volume) {
+        new Thread(() -> {
+            try {
+                Clip clip = AudioSystem.getClip();
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                        Main.class.getResourceAsStream(url));
+                clip.open(inputStream);
+
+                FloatControl gainControl = (FloatControl) clip
+                        .getControl(FloatControl.Type.MASTER_GAIN);
+                float dB = (float) (Math.log(volume / 100f) / Math.log(10.0) * 20.0);
+                gainControl.setValue(dB);
+
+                clip.start();
+            } catch (Exception e) {
+                Main.LOGGER.handleException(e, false);
+            }
+        }
+        ).start();
+    }
 
 }

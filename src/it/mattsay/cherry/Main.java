@@ -1,7 +1,6 @@
 package it.mattsay.cherry;
 
 import it.mattsay.cherry.utils.CherryLogger;
-import it.mattsay.cherry.utils.Commands;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -101,7 +100,7 @@ public class Main extends Application {
         SwingUtilities.invokeLater(this::setupTray);
 
         Platform.setImplicitExit(false);
-        primaryStage.setTitle("CherrySwitch");
+        primaryStage.setTitle("Cherry");
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -133,7 +132,7 @@ public class Main extends Application {
         } catch (NativeHookException e) {
             e.printStackTrace();
         }
-        lag.setState(false);
+        lag.setSwitch(false);
         try {
         if(!new File("config.txt").exists()) Files.createFile(Paths.get("config.txt"));
         Files.write(Paths.get("config.txt"), ("binding=" + lag.getKey()).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);

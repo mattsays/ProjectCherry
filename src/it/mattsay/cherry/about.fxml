@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121">
+    <children>
+        <ImageView fitHeight="90.0" fitWidth="96.0" layoutX="52.0" layoutY="6.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@icon.png"/>
+            </image>
+        </ImageView>
+        <Label layoutY="104.0" prefHeight="55.0" prefWidth="193.0"
+               text="This software was made by MattSay. Thanks to Simovero for the icon and the idea" wrapText="true"/>
+    </children>
+</AnchorPane>
