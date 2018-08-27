@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class Commands {
@@ -28,7 +29,8 @@ public class Commands {
             try {
                 Clip clip = AudioSystem.getClip();
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                        Main.class.getResourceAsStream(url));
+                        new BufferedInputStream(Main.class.getResourceAsStream(url)));
+
                 clip.open(inputStream);
 
                 FloatControl gainControl = (FloatControl) clip
